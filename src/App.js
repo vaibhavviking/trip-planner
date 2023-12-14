@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Card from './components/Card';
 import arrow from './assets/arrow.png';
+import Popup from './components/Popup';
 
 function App() {
 
@@ -99,6 +100,8 @@ function App() {
         </div></>)}
 
       </div>
+
+      <Popup />
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
