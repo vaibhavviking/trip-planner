@@ -43,13 +43,26 @@ function App() {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 20000); // Set timeout to 10 seconds
 
+    function handleData(json){
+      let final = data;
+      console.log(final);
+      let names = [];
+      final.forEach(obj => names.push(obj['place']))
+      json.forEach(obj => {
+        if(names.indexOf(json['place'])==-1){
+          final.push(obj);
+        }
+      })
+      console.log(final);
+      setData(final);
+    }
 
     function printPos(position) {
       setLat(position.coords.latitude);
       setLong(position.coords.longitude);
       fetch(`https://nipuntopno.pythonanywhere.com/api/fetch-places?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`, controller.signal)
         .then((response) => response.json())
-        .then((json) => { if (data.length == 0) setData(json) });
+        .then((json) => setData(json));
       console.log('fetching');
     }
   }, [])
@@ -78,7 +91,7 @@ function App() {
                     <button onClick={() => handle(i)} className="accordion tw-rounded-lg">{obj['place']}</button>
                     <input className='tw-scale-150 tw-mx-5 checks' value={obj['place']} type="checkbox" />
                   </div>
-                  <div style={i == ind ? { height: '-webkit-fit-content' } : { height: "0px" }} className="panel tw-py-0 tw-px-[18px] tw-bg-white tw-overflow-hidden tw-text-center md:tw-flex md:tw-text-left">
+                  <div style={i == ind ? { height: '-webkit-fit-content' } : { height: "0px" }} className="tw-rounded-md panel tw-py-0 tw-px-[18px] tw-bg-white tw-overflow-hidden tw-text-center md:tw-flex md:tw-text-left">
                     <div className="pimg tw-max-w-[400px] tw-my-5 tw-mx-auto">
                       <img className="tw-w-[100%]" src={obj['img_url']} />
                     </div>
