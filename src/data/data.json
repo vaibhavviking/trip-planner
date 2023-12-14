@@ -1,0 +1,92 @@
+[
+  {
+      "place": "India Gate",
+      "description": "India Gate is a war memorial located in the heart of Delhi. It was built in memory of the Indian soldiers who lost their lives during World War I. The monument stands as a symbol of valor and sacrifice. It is also a popular tourist attraction.",
+      "opens": "05:00 AM",
+      "closes": "12:00 AM",
+      "distance": "3.5 km",
+      "time_spent": "1-2 hours",
+      "expenditure": 0
+  },
+  {
+      "place": "Qutub Minar",
+      "description": "Qutub Minar is a UNESCO World Heritage Site in Delhi. It is a towering minaret built during the 12th century. The complex also includes various other ancient structures, making it a fascinating historical site.",
+      "opens": "07:00 AM",
+      "closes": "05:00 PM",
+      "distance": "17.5 km",
+      "time_spent": "2-3 hours",
+      "expenditure": 30
+  },
+  {
+      "place": "Humayun's Tomb",
+      "description": "Humayun's Tomb is a magnificent mausoleum that was built for the Mughal Emperor Humayun. It is known for its beautiful architecture and lush gardens. The tomb is a popular attraction among history enthusiasts and architecture lovers.",
+      "opens": "08:00 AM",
+      "closes": "06:00 PM",
+      "distance": "8.2 km",
+      "time_spent": "1-2 hours",
+      "expenditure": 40
+  },
+  {
+      "place": "Lotus Temple",
+      "description": "Lotus Temple, also known as the Bahá'í House of Worship, is a mesmerizing temple in Delhi. It is shaped like a lotus flower and is open to people of all religions. The serene atmosphere and stunning architecture make it a must-visit place.",
+      "opens": "09:00 AM",
+      "closes": "07:00 PM",
+      "distance": "19.1 km",
+      "time_spent": "1-2 hours",
+      "expenditure": 0
+  },
+  {
+      "place": "Red Fort",
+      "description": "Red Fort is a historic fort in Old Delhi. It served as the main residence of the Mughal emperors for nearly 200 years. The fort is known for its impressive architecture and houses various museums and other attractions.",
+      "opens": "09:30 AM",
+      "closes": "04:30 PM",
+      "distance": "6.4 km",
+      "time_spent": "2-3 hours",
+      "expenditure": 35
+  },
+  {
+      "place": "Jama Masjid",
+      "description": "Jama Masjid is one of the largest mosques in India and is located in Old Delhi. It was built by the Mughal emperor Shah Jahan and is known for its stunning architecture. The mosque complex can accommodate thousands of worshippers.",
+      "opens": "07:00 AM",
+      "closes": "12:00 PM",
+      "distance": "6.6 km",
+      "time_spent": "1-2 hours",
+      "expenditure": 0
+  },
+  {
+      "place": "Akshardham Temple",
+      "description": "Akshardham Temple is a magnificent Hindu temple complex in Delhi. It showcases traditional Indian art, culture, and spiritual traditions. The temple is known for its intricate carvings and tranquil surroundings.",
+      "opens": "09:30 AM",
+      "closes": "06:30 PM",
+      "distance": "11.9 km",
+      "time_spent": "3-4 hours",
+      "expenditure": 220
+  },
+  {
+      "place": "Rashtrapati Bhavan",
+      "description": "Rashtrapati Bhavan is the official residence of the President of India. It is an architectural marvel spread across a vast area. The beautifully landscaped gardens and grandeur of the building make it a must-visit place in Delhi.",
+      "opens": "09:00 AM",
+      "closes": "04:00 PM",
+      "distance": "5.6 km",
+      "time_spent": "1-2 hours",
+      "expenditure": 50
+  },
+  {
+      "place": "Chandni Chowk",
+      "description": "Chandni Chowk is one of the oldest and busiest markets in Old Delhi. It is known for its narrow lanes, bustling streets, and vibrant atmosphere. The market offers a wide variety of items ranging from textiles and jewelry to delicious street food.",
+      "opens": "11:00 AM",
+      "closes": "09:00 PM",
+      "distance": "5.3 km",
+      "time_spent": "2-3 hours",
+      "expenditure": 0
+  },
+  {
+      "place": "National Museum",
+      "description": "National Museum in Delhi is one of the largest museums in India. It houses a vast collection of artifacts, sculptures, paintings, and other historical objects. The museum provides a fascinating glimpse into the rich cultural heritage of the country.",
+      "opens": "10:00 AM",
+      "closes": "06:00 PM",
+      "distance": "10.9 km",
+      "time_spent": "2-3 hours",
+      "expenditure": 20
+  }
+]
