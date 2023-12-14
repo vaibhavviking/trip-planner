@@ -3,37 +3,31 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Card from './components/Card';
+import arrow from './assets/arrow.png';
 
 function App() {
 
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
-  const [iti, setIti] = useState();
+  const [iti, setIti] = useState(null);
   const [ind, setInd] = useState(-1);
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => {
-    setIti(null);
-    setShow(true);
-  }
-
-  navigator.geolocation.getCurrentPosition(printPos);
-
-  function printPos(position) {
-    console.log(position.coords.latitude);
-    console.log(position.coords.longitude);
-  }
+  const handleShow = () => setShow(true);
 
   function handleSubmit() {
+    handleShow();
+    setIti('Loading......');
     let req = {};
     req['places'] = [];
-    req['time'] = document.getElementById('timeLeft').value;
+    req['latitude'] = lat;
+    req['longitude'] = long;
     let check = document.getElementsByClassName('checks');
     let i;
     for (i = 0; i < check.length; i++) {
-      console.log(check[i].checked);
       if (check[i].checked == true) {
         req['places'].push(check[i].value);
       }
@@ -47,13 +41,16 @@ function App() {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(printPos);
     const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 20000); // Set timeout to 10 seconds
+    const timeoutId = setTimeout(() => controller.abort(), 20000); // Set timeout to 10 seconds
 
 
     function printPos(position) {
-      fetch(`https://nipuntopno.pythonanywhere.com/api/fetch-places?latitude=${position.coords.latitude}9&longitude=${position.coords.longitude}`, controller.signal)
+      setLat(position.coords.latitude);
+      setLong(position.coords.longitude);
+      fetch(`https://nipuntopno.pythonanywhere.com/api/fetch-places?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`, controller.signal)
         .then((response) => response.json())
-        .then((json) => setData(json));
+        .then((json) => { if (data.length == 0) setData(json) });
+      console.log('fetching');
     }
   }, [])
 
@@ -71,32 +68,36 @@ function App() {
     <>
       <div className="App tw-text-center tw-w-[100%] tw-min-h-[100vh] tw-bg-city-light tw-bg-center tw-bg-cover tw-bg-no-repeat
     tw-p-8">
-        <div>
-          <button onClick={handleShow}>Create itinerary</button>
-        </div>
-        <div className='projects'>
-          <div>
-            {data.map((obj, i) => {
+        {data.length == 0 ? (<>Loading.....</>) : (<>
+          <div className='projects'>
+            <div>
+              {data.map((obj, i) => {
 
-              return <div className="punit tw-mx-0 tw-my-8" >
-                <button onClick={() => handle(i)} className="accordion tw-rounded-lg">{obj['place']}</button>
-                <div style={i == ind ? { height: '-webkit-fit-content' } : { height: "0px" }} className="panel tw-py-0 tw-px-[18px] tw-bg-white tw-overflow-hidden tw-text-center md:tw-flex md:tw-text-left">
-                  <div className="pimg tw-max-w-[400px] tw-my-5 tw-mx-auto">
-                    <img className="tw-w-[100%]" src={obj['img_url']} />
+                return <div className="punit tw-mx-0 tw-my-8" >
+                  <div className="tw-flex">
+                    <button onClick={() => handle(i)} className="accordion tw-rounded-lg">{obj['place']}</button>
+                    <input className='tw-scale-150 tw-mx-5 checks' value={obj['place']} type="checkbox" />
                   </div>
-                  <div className="tw-p-[2%] md:tw-max-w-[60%] tw-mx-auto">
-                    <p>{obj['description']}</p>
-                    <p>Opening time: {obj['open']}</p>
-                    <p>Closing time: {obj['close']}</p>
-                    <p>Distance from you: {obj['distance']}</p>
-                    <p>Time needed to explore: {obj['time']}</p>
-                    <p>Estimated expenditure: {obj['expenditure']}</p>
+                  <div style={i == ind ? { height: '-webkit-fit-content' } : { height: "0px" }} className="panel tw-py-0 tw-px-[18px] tw-bg-white tw-overflow-hidden tw-text-center md:tw-flex md:tw-text-left">
+                    <div className="pimg tw-max-w-[400px] tw-my-5 tw-mx-auto">
+                      <img className="tw-w-[100%]" src={obj['img_url']} />
+                    </div>
+                    <div className="tw-p-[2%] md:tw-max-w-[60%] tw-mx-auto">
+                      <p>{obj['description']}</p>
+                      <p>Opening time: {obj['opens']}</p>
+                      <p>Closing time: {obj['closes']}</p>
+                      <p>Distance from you: {obj['distance']}</p>
+                      <p>Time needed to explore: {obj['time_spent']}</p>
+                      <p>Estimated expenditure: {obj['expenditure']}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            })}
-          </div>
-        </div>
+              })}
+            </div>
+          </div><div>
+          <Button variant="success" onClick={handleSubmit}>Create itinerary</Button>
+        </div></>)}
+
       </div>
 
       <Modal show={show} onHide={handleClose}>
@@ -104,7 +105,7 @@ function App() {
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
+          {iti == null ? (<form>
             {
               data.map(obj => {
                 return (<><input type="checkbox" className='checks' value={obj['place']} name={obj['place']} />
@@ -112,17 +113,14 @@ function App() {
                 );
               })
             }
-            <label className='tw-mr-2' for="timeLeft">Time Available for travel:</label>
-            <input required="true" type="text" id="timeLeft" name="timeLeft" placeholder='time in hours' />
-          </form>
-          {iti && JSON.stringify(iti)}
+          </form>) : ((iti == 'Loading......') ? (iti) : iti.map((obj, i) => {
+            return <><Card to={obj['to']} fare={obj['fare_to_explore']} timeToExplore={obj['time_to_explore']} />{i == iti.length - 1 ? <></> : <div><img className='tw-m-auto' style={{ width: "5%" }} src={arrow} /></div>}</>
+          }))
+          }
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
-          </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            Create itinerary
           </Button>
         </Modal.Footer>
       </Modal>
