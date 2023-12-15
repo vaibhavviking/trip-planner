@@ -18,17 +18,12 @@ const Popup = () => {
         const scheduleNotifications = () => {
             setInterval(async () => {
                 try {
-                    // const response = await axios.get('https://ae5c95ec-12c5-4a88-81bd-ff53af9afda3.mock.pstmn.io/popup');
-                    // setNotifications(response.data);
-                    var temp = {
-                        "name": "truffle",
-                        "desc": "khao burger aur mast raho broooooooooo"
-                    }
-                    showNotification(temp);
+                    const response = await axios.get('https://nipuntopno.pythonanywhere.com/api/fetch-hotspot');
+                    showNotification(response.data);
                 } catch (error) {
                     console.error('Error fetching notifications:', error);
                 }
-            }, 1 * 60 * 1000);
+            }, 1 * 30 * 1000);
         };
 
         scheduleNotifications();
@@ -55,7 +50,10 @@ const PopupComponent = ({ data, onClose }) => (
         <button className="close-button" onClick={onClose}>&#x2716;</button>
         <p style={{ padding: '10px', fontSize: '17px' }}>
             <span style={{ fontWeight: 'bold', fontSize: '30px' }}>Hotspot near you!<br></br></span>
-            <span style={{ fontWeight: 'bold', fontSize: '20px' }}>{data['name']}<br></br></span> {data['desc']}
+            <a href={data['map']} target="_blank">
+                <span style={{ fontWeight: 'bold', fontSize: '20px' }}>{data['name']}<br></br></span>
+            </a>
+            {data['desc']}
         </p>
     </div>
   );
