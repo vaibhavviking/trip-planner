@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 .accordion {
-    @apply tw-bg-[#eee] tw-text-[#444] tw-cursor-pointer tw-p-[18px] tw-w-[100%] tw-border-none tw-text-left tw-outline-none tw-text-xl
-    /* background-color: #eee;
+  @apply tw-bg-[#333] tw-text-white tw-cursor-pointer tw-p-[18px] tw-w-[100%] tw-border-none tw-text-left tw-outline-none tw-text-xl
+  /* background-color: #eee;
     color: #444;
     cursor: pointer;
     padding: 18px;
@@ -17,7 +17,7 @@
   }
 
   .projects .active, .accordion:hover {
-    @apply tw-bg-[#ccc]
+    @apply tw-bg-[#555]
     /* background-color: #ccc; */
   }
 

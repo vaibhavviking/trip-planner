@@ -30,13 +30,23 @@ function App() {
 
   function handleSubmit() {
     handleShow1();
+    let check = document.getElementsByClassName('checks');
+    let count = 0;
+    let i;
+    for (i = 0; i < check.length; i++) {
+      if (check[i].checked == true) {
+        count = +count + +1;
+      }
+    }
+    if (count == 0) {
+      setIti('Please include atleast one location in the itinerary');
+      return;
+    }
     setIti('Loading......');
     let req = {};
     req['places'] = [];
     req['latitude'] = lat;
     req['longitude'] = long;
-    let check = document.getElementsByClassName('checks');
-    let i;
     for (i = 0; i < check.length; i++) {
       if (check[i].checked == true) {
         req['places'].push(check[i].value);
@@ -93,8 +103,8 @@ function App() {
     console.log(category);
     console.log(description);
     console.log(amount);
-    if(category==null || amount==0 || description=='') return;
-    let exp = {"desc": description, "cat": category, "amount": amount};
+    if (category == null || amount == 0 || description == '') return;
+    let exp = { "desc": description, "cat": category, "amount": amount };
     let temp = expenses;
     temp.push(exp);
     setExpenses(temp);
@@ -117,8 +127,8 @@ function App() {
     setAmount(event.target.value);
   }
 
-  function deleteExp(ind){
-    if(expenses.length == 1){
+  function deleteExp(ind) {
+    if (expenses.length == 1) {
       setExpenses([]);
       setTotalExp(0);
       return;
@@ -127,8 +137,8 @@ function App() {
     let temp = expenses;
     let final = [];
     let sum = 0;
-    expenses.forEach((obj,i) => {
-      if(i!=ind){
+    expenses.forEach((obj, i) => {
+      if (i != ind) {
         final.push(obj);
         sum = +sum + +obj['amount'];
       }
@@ -137,7 +147,7 @@ function App() {
     setTotalExp(sum);
   }
 
-  function reloadSum(){
+  function reloadSum() {
     let sum = 0;
     expenses.forEach(obj => {
       sum = +sum + +obj['amount'];
@@ -156,7 +166,7 @@ function App() {
 
                 return <div className="punit tw-mx-0 tw-my-8" >
                   <div className="tw-flex">
-                    <button onClick={() => handle(i)} className="accordion tw-rounded-lg">{obj['place']}</button>
+                    <button onClick={() => handle(i)} className="accordion tw-rounded-lg"><strong>{obj['place']}</strong></button>
                     <input className='tw-scale-150 tw-mx-5 checks' value={obj['place']} type="checkbox" />
                   </div>
                   <div style={i == ind ? { height: '-webkit-fit-content' } : { height: "0px" }} className="tw-rounded-md panel tw-py-0 tw-px-[18px] tw-bg-white tw-overflow-hidden tw-text-center md:tw-flex md:tw-text-left">
@@ -165,18 +175,18 @@ function App() {
                     </div>
                     <div className="tw-p-[2%] md:tw-max-w-[60%] tw-mx-auto">
                       <p>{obj['description']}</p>
-                      <p>Opening time: {obj['opens']}</p>
-                      <p>Closing time: {obj['closes']}</p>
-                      <p>Distance from you: {obj['distance']}</p>
-                      <p>Time needed to explore: {obj['time_spent']}</p>
-                      <p>Estimated expenditure: {obj['expenditure']}</p>
+                      <p><strong>Opening time:</strong> {obj['opens']}</p>
+                      <p><strong>Closing time: </strong> {obj['closes']}</p>
+                      <p><strong>Distance from you:</strong> {obj['distance']}</p>
+                      <p><strong>Time needed to explore:</strong> {obj['time_spent']}</p>
+                      <p><strong>Estimated expenditure: </strong>{obj['expenditure']}</p>
                     </div>
                   </div>
                 </div>
               })}
             </div>
           </div><div>
-            <Button variant="success" onClick={handleSubmit}>Create itinerary</Button>
+            <Button variant="success" className='tw-m-2' onClick={handleSubmit}>Create itinerary</Button><br />
             <Button variant="success" onClick={handleShow2}>Expenses</Button>
           </div></>)}
 
@@ -184,7 +194,7 @@ function App() {
 
       <Modal show={show1} onHide={handleClose1}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Your Itinerary</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {iti == null ? (<form>
@@ -195,8 +205,12 @@ function App() {
                 );
               })
             }
-          </form>) : ((iti == 'Loading......') ? (iti) : iti.map((obj, i) => {
-            return <><Card to={obj['to']} fare={obj['fare_to_explore']} timeToExplore={obj['time_to_explore']} />{i == iti.length - 1 ? <></> : <div><img className='tw-m-auto' style={{ width: "5%" }} src={arrow} /></div>}</>
+          </form>) : ((typeof (iti) == 'string') ? (iti) : iti.map((obj, i) => {
+            return <><Card to={obj['to']} fare={obj['fare_to_explore']} timeToExplore={obj['time_to_explore']} />{i == iti.length - 1 ? <></> :
+              <div className='tw-flex tw-justify-center' >
+                <img style={{ width: "5%" }} src={arrow} />
+                <div className='tw-text-xs'>Approx. Journey time: {obj['journey_time']}</div>
+              </div>}</>
           }))
           }
         </Modal.Body>
@@ -209,36 +223,36 @@ function App() {
 
       <Modal show={show2} onHide={handleClose2}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Your Expenses</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
-            <div className='tw-m-3'>
+            <div className='tw-m-3 mb-4'>
               <label className='tw-mr-2' for="Description">Description:</label>
               <input className='tw-border-black tw-rounded-2' onChange={handleDesc} value={description} name="Description" type="text" />
             </div>
-            <div className='tw-m-3'>
+            <div className='tw-m-3 mb-4'>
               <label className='tw-mr-2' for="category">Choose a category:</label>
               <select className='tw-border-black tw-rounded-2' onChange={handleCat} value={category} name="category" id="category">
                 <option value="Hotel">Hotel</option>
                 <option value="Food">Food</option>
               </select>
             </div>
-            <div className='tw-m-3'>
+            <div className='tw-m-3 mb-4'>
               <label className='tw-mr-2' for="Amount">Amount:</label>
               <input className='tw-outline-2' onChange={handleAmount} value={amount} name="Amount" type="number" />
             </div>
           </form>
-          <Button variant='success' onClick={addExpense}>Add Expense</Button>
+          <Button className='tw-m-3 mb-3' variant='success' onClick={addExpense}>Add Expense</Button>
           <h4>Expenses:</h4>
           <div>
-            {expenses.map((obj,i) => {
+            {expenses.map((obj, i) => {
               return <ExpenseCard description={obj['desc']} category={obj['cat']} amount={obj['amount']} deleteFunc={deleteExp} ind={i} />;
             })}
           </div>
-            <div>
-              Total expenditure: {totalExp}
-            </div>
+          <div>
+            Total expenditure: {totalExp}
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose2}>
