@@ -22,6 +22,7 @@ function App() {
   const [amount, setAmount] = useState(null);
   const [category, setCat] = useState('Hotel');
   const [totalExp, setTotalExp] = useState(0);
+  const [tip, setTip] = useState("");
 
   const handleClose1 = () => setShow1(false);
   const handleShow1 = () => setShow1(true);
@@ -100,22 +101,38 @@ function App() {
 
   console.log(data);
 
-  function addExpense(event) {
+  function updateTip(ind, tip) {
+    console.log(ind, tip)
+    expenses[ind]['tip'] = tip
+  }
+
+  const addExpense = async (event) => {
     console.log(category);
     console.log(description);
-    console.log(amount);
+    console.log(amount);    
     if (category == null || amount == 0 || description == '') return;
-    let exp = { "desc": description, "cat": category, "amount": amount };
+    let exp = { "desc": description, "cat": category, "amount": amount, "tip": tip };
+    console.log(exp)
     let temp = expenses;
     temp.push(exp);
     setExpenses(temp);
+    console.log(temp)
     setDesc('');
     setAmount(0);
+    setTip('');
     let sum = 0;
     temp.forEach(obj => {
       sum = +sum + +obj['amount'];
     })
     setTotalExp(sum);
+    let req = {};
+    req['text'] = description;
+    req['amount'] = amount;
+    req['category'] = category;
+    axios.post('https://nipuntopno.pythonanywhere.com/api/expense/add', req).then(resp => {
+      console.log(resp.data)
+      updateTip(expenses.length - 1, resp.data);
+    })
   }
 
   function handleDesc(event) {
@@ -146,6 +163,12 @@ function App() {
     });
     setExpenses(final);
     setTotalExp(sum);
+  }
+
+  function getTip(ind) {
+    console.log(ind)
+    console.log(expenses[ind])
+    return expenses[ind]['tip'];
   }
 
   function reloadSum() {
@@ -250,7 +273,7 @@ function App() {
           <h4>Expenses:</h4>
           <div>
             {expenses.map((obj, i) => {
-              return <ExpenseCard description={obj['desc']} category={obj['cat']} amount={obj['amount']} deleteFunc={deleteExp} ind={i} />;
+              return <ExpenseCard description={obj['desc']} category={obj['cat']} amount={obj['amount']} deleteFunc={deleteExp} getTipFunc={getTip} ind={i} />;
             })}
           </div>
           <div>

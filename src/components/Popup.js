@@ -56,6 +56,6 @@ const PopupComponent = ({ data, onClose }) => (
             {data['desc']}
         </p>
     </div>
-  );
+);
 
 export default Popup;
