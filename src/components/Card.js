@@ -8,7 +8,7 @@ const Card = ({ title, to, fare, timeToExplore }) => {
       <div className="overlay">
         <h3>{to}</h3>
         <p className="extra-info">
-          Fare: {fare} Rs <br></br>
+          Fare: {fare} <br></br>
           Time to Explore: {timeToExplore}
         </p>
       </div>
