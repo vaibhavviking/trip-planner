@@ -63,3 +63,57 @@
     align-self: top; /* Align other content in the middle */
     font-size: 14px;
   }
+
+  .popup-container {
+    position: fixed;
+    top: 70%;
+    right: 0;
+    transform: translateX(100%);
+    z-index: 999;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .popup-container.active {
+    transform: translateX(0);
+  }
+
+  .popup {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    opacity: 0.7;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .popup-container:hover .popup {
+    opacity: 1;
+  }
+
+  .popup-container.exiting {
+    transform: translateX(100%);
+  }
+
+  .popup-container.exiting {
+    transform: translateX(100%);
+  }
+
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  @media (max-width: 767px) {
+    .popup {
+      padding: 10px; /* Adjust padding for smaller screens */
+      max-width: 300px; /* Set a maximum width for the popup */
+      width: 100%; /* Make sure it takes the full width of the screen */
+    }
+  }

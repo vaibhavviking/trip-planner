@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Card from './components/Card';
 import arrow from './assets/arrow.png';
+import Popup from './components/Popup';
 import ExpenseCard from './components/ExpenseCard';
 
 function App() {
@@ -53,8 +54,8 @@ function App() {
       }
     }
     console.log(req);
-    // axios.post('https://nipuntopno.pythonanywhere.com/api/plan-trip', req).then(resp => {
-    axios.post('https://d2c5f7c5-ce16-4d89-b9d1-da6d5c935925.mock.pstmn.io/iti', req).then(resp => {
+    axios.post('https://nipuntopno.pythonanywhere.com/api/plan-trip', req).then(resp => {
+    // axios.post('https://d2c5f7c5-ce16-4d89-b9d1-da6d5c935925.mock.pstmn.io/iti', req).then(resp => {
       setIti(resp.data);
     })
   }
@@ -81,8 +82,8 @@ function App() {
     function printPos(position) {
       setLat(position.coords.latitude);
       setLong(position.coords.longitude);
-      // fetch(`https://nipuntopno.pythonanywhere.com/api/fetch-places?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`, controller.signal)
-      fetch(`https://d436677d-31d1-4bf2-862e-8a32f0760796.mock.pstmn.io/data`, controller.signal)
+      fetch(`https://nipuntopno.pythonanywhere.com/api/fetch-places?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}`, controller.signal)
+      // fetch(`https://d436677d-31d1-4bf2-862e-8a32f0760796.mock.pstmn.io/data`, controller.signal)
         .then((response) => response.json())
         .then((json) => setData(json));
       console.log('fetching');
@@ -191,6 +192,8 @@ function App() {
           </div></>)}
 
       </div>
+
+      <Popup />
 
       <Modal show={show1} onHide={handleClose1}>
         <Modal.Header closeButton>
